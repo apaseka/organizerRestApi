@@ -14,6 +14,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/project")
+@CrossOrigin
 public class ProjectController {
 
     @Autowired

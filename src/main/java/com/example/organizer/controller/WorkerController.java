@@ -13,6 +13,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/worker")
+@CrossOrigin
 public class WorkerController {
 
     @Autowired

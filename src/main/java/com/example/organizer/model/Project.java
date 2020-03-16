@@ -11,6 +11,7 @@ public class Project {
     private UUID id;
 
     @NotBlank(message = "Can not be empty!")
+    @Column(unique = true)
     private String name;
 
     private Date fromDate;
