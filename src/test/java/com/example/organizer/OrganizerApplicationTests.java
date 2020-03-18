@@ -60,7 +60,7 @@ class OrganizerApplicationTests {
         WorkerResponse workerResponse = workerService.createUpdateWorker(worker);
         Worker dbWorker = workerResponse.getWorker();
 
-        Assertions.assertEquals("Specialist created", workerResponse.getMsg());
+        Assertions.assertEquals("Successful", workerResponse.getMsg());
         Assertions.assertEquals(worker, dbWorker);
 
         verify(workerRepository, times(1)).save(worker);
