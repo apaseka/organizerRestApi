@@ -57,7 +57,7 @@ class OrganizerApplicationTests {
         Mockito.when(workerRepository.save(any()))
                 .thenReturn(new Worker(Title.HR, "Alex6", "Papa", 33));
 
-        WorkerResponse workerResponse = workerService.createWorker(worker);
+        WorkerResponse workerResponse = workerService.createUpdateWorker(worker);
         Worker dbWorker = workerResponse.getWorker();
 
         Assertions.assertEquals("Specialist created", workerResponse.getMsg());

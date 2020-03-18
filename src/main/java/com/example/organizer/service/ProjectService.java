@@ -1,11 +1,13 @@
 package com.example.organizer.service;
 
+import com.example.organizer.exception.DataException;
 import com.example.organizer.model.Project;
 import com.example.organizer.model.Worker;
 import com.example.organizer.repository.ProjectRepository;
 import com.example.organizer.repository.WorkerRepository;
 import com.example.organizer.viewmodel.ProjectResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -22,11 +24,9 @@ public class ProjectService {
     private WorkerRepository workerRepository;
 
     public ProjectResponse createProject(Project project) {
-
         Project pFromDb = projectRepository.findByName(project.getName());
-
         if (pFromDb != null) {
-            return new ProjectResponse(pFromDb, "Project name must be unique!");
+            throw new DataException("Project name must be unique!");
         }
         Project pr = projectRepository.save(project);
         return new ProjectResponse(pr, "Project created");
@@ -40,16 +40,18 @@ public class ProjectService {
         if (projectRepository.checkLinkage(uuid) == null) {
             projectRepository.deleteById(uuid);
         } else {
-            throw new RuntimeException();
+            throw new DataException("Can't remove with assigned specialists");
         }
     }
 
     @Transactional
     public String changeName(Project project) {
-
-        int i = projectRepository.updateName(project.getName(), project.getId());
-
-        return i == 1 ? "Project name updated" : "Update failed";
+        try {
+            projectRepository.updateName(project.getName(), project.getId());
+            return "Project name updated";
+        } catch (DataIntegrityViolationException e) {
+            throw new DataException("Failed to rename, name not unique!");
+        }
     }
 
     public void subscribe(Worker worker, Project project) {

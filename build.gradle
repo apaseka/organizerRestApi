@@ -31,6 +31,7 @@ dependencies {
 	}
 	// https://mvnrepository.com/artifact/javax.validation/validation-api
 	compile group: 'javax.validation', name: 'validation-api', version: '2.0.0.Final'
+	runtime group: 'com.h2database', name: 'h2'
 }
 
 test {

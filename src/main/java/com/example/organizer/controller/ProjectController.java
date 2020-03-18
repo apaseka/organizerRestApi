@@ -46,11 +46,7 @@ public class ProjectController {
     @DeleteMapping("/{id}")
     public String delete(@PathVariable UUID id) {
 
-        try {
-            projectService.remove(id);
-        } catch (Throwable throwable) {
-            return "Can't remove with assigned specialists";
-        }
+        projectService.remove(id);
         return "Project removed";
     }
 
