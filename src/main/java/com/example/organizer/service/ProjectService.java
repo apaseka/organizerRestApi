@@ -37,7 +37,11 @@ public class ProjectService {
     }
 
     public void remove(UUID uuid) {
-        projectRepository.deleteById(uuid);
+        if (projectRepository.checkLinkage(uuid) == null) {
+            projectRepository.deleteById(uuid);
+        } else {
+            throw new RuntimeException();
+        }
     }
 
     @Transactional

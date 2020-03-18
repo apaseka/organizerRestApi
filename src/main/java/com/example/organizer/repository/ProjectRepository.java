@@ -15,4 +15,7 @@ public interface ProjectRepository extends JpaRepository<Project, UUID> {
     int updateName(@Param("name") String name, @Param("id") UUID id);
 
     Project findByName(String name);
+
+    @Query("select p.id from Project p join p.workers where p.id = :id")
+    UUID checkLinkage(@Param("id") UUID id);
 }
