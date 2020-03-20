@@ -8,6 +8,7 @@ import com.example.organizer.repository.WorkerRepository;
 import com.example.organizer.viewmodel.ProjectResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -37,10 +38,13 @@ public class ProjectService {
     }
 
     public void remove(UUID uuid) {
-        if (projectRepository.checkLinkage(uuid) == null) {
+        try {
+            if (projectRepository.checkLinkage(uuid) != null)
+                throw new DataException("Can't remove with assigned specialist");
+
             projectRepository.deleteById(uuid);
-        } else {
-            throw new DataException("Can't remove with assigned specialists");
+        } catch (IncorrectResultSizeDataAccessException e) {
+            throw new DataException("First unlink all specialists");
         }
     }
 
