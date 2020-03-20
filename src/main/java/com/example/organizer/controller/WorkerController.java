@@ -1,5 +1,6 @@
 package com.example.organizer.controller;
 
+import com.example.organizer.exception.DataException;
 import com.example.organizer.model.Worker;
 import com.example.organizer.service.WorkerService;
 import com.example.organizer.viewmodel.WorkerResponse;
@@ -37,11 +38,7 @@ public class WorkerController {
 
     @DeleteMapping("/{id}")
     public String deleteWorker(@PathVariable UUID id) {
-        try {
             workerService.removeWorker(id);
-        } catch (DataIntegrityViolationException e) {
-            return "Specialist can't be removed while is assigned to project!";
-        }
         return "Specialist removed";
     }
 }
