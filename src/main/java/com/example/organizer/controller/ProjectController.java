@@ -35,7 +35,7 @@ public class ProjectController {
     }
 
     @PostMapping("/change")
-    public String changeName(@RequestBody Project project,
+    public ProjectResponse changeName(@RequestBody Project project,
                              BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new ValidationException();

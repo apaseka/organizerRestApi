@@ -38,11 +38,11 @@ public class WorkerController {
 
     @DeleteMapping("/{id}")
     public String deleteWorker(@PathVariable UUID id) {
-        try {
+       try {
             workerService.removeWorker(id);
-        } catch (DataIntegrityViolationException e) {
-            throw new DataException("Specialist can't be removed while is assigned to project!");
-        }
+       } catch (DataIntegrityViolationException e) {
+           throw new DataException("Specialist can't be removed while is assigned to project!");
+       }
         return "Specialist removed";
     }
 }

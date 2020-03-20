@@ -45,10 +45,10 @@ public class ProjectService {
     }
 
     @Transactional
-    public String changeName(Project project) {
+    public ProjectResponse changeName(Project project) {
         try {
             projectRepository.updateName(project.getName(), project.getId());
-            return "Project name updated";
+            return new ProjectResponse(project, "Project name updated");
         } catch (DataIntegrityViolationException e) {
             throw new DataException("Failed to rename, name not unique!");
         }
