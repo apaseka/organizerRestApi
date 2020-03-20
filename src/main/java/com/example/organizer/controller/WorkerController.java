@@ -40,7 +40,7 @@ public class WorkerController {
         try {
             workerService.removeWorker(id);
         } catch (DataIntegrityViolationException e) {
-            return "Specialist can't be removed while is assigned to project!";
+            throw new DataException("Specialist can't be removed while is assigned to project!");
         }
         return "Specialist removed";
     }
